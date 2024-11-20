@@ -15,8 +15,7 @@ import { Card, Menu } from 'antd';
 import { Flex, Layout, } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import Cards from './components/Cards';
-import Tabs from './components/Tabs';
-import TimeLine from './components/TimeLine';
+
 
 
 const { Header, Footer, Sider, Content } = Layout;
