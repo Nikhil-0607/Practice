@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Checkbox, Form, Input } from 'antd';
 
-
 const onFinish = (values) => {
   console.log('Success:', values);
 };
@@ -9,8 +8,7 @@ const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
-
-const Home = () => {
+const BusRegForm = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -26,7 +24,7 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
-
+  
   return (
     <div>
       <>
@@ -94,4 +92,6 @@ const Home = () => {
   )
 }
 
-export default Home
+export default BusRegForm
+
+

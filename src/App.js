@@ -15,6 +15,9 @@ import { Card, Menu } from 'antd';
 import { Flex, Layout, } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import Cards from './components/Cards';
+import TaskOne from './components/TaskOne';
+import TaskTwo from './components/TaskTwo';
+import BusRegForm from './components/BusRegForm';
 
 
 
@@ -62,8 +65,16 @@ function App() {
     <div>
 
 <Layout style={layoutStyle}>
-      <Header style={headerStyle}>Header</Header>
+
+
+      <Header style={headerStyle}>
+        <BusRegForm/>
+      </Header>
+
+
       <Layout>
+
+
         <Sider width="25%" style={siderStyle}>
         <Menu>
       <Menu.Item key="1">  <Link to = "/Home"><HomeOutlined spin = "true" /> Home</Link></Menu.Item>
@@ -72,8 +83,12 @@ function App() {
       <Menu.Item key="4"><Link to = "/LineChart">LineChart</Link></Menu.Item>
       <Menu.Item key="5"><Link to = "/PieChart">circle chaft</Link></Menu.Item>
       <Menu.Item key="6"><Link to = "/Cards">Cards</Link></Menu.Item>
+      <Menu.Item key="7"><Link to = "/TaskOne">TaskOne</Link></Menu.Item>
+      <Menu.Item key="8"><Link to = "/TaskTwo">TaskTwo</Link></Menu.Item>
       </Menu>
         </Sider>
+
+
         <Content style={contentStyle}><Routes>
         <Route path = "/" element = {<Home/>}/>
         <Route path = "/Home" element = {<Home/>}/>
@@ -83,10 +98,19 @@ function App() {
         <Route path = "PieChart" element = {<PieChart/>}/>
         <Route path = "Cards" element = {<Cards/>}/>
         <Route path = "*" element = {<Notfound/>}/>
+        <Route path = "TaskOne" element = {<TaskOne/>}/>
+        <Route path = "TaskTwo" element = {<TaskTwo/>}/>
+
+
 
       </Routes></Content>
+
       </Layout>
+
+
       <Footer style={footerStyle}>Footer</Footer>
+
+
     </Layout>
   </div>
   );
