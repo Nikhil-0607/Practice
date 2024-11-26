@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const TaskFive = () => {
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(()=>{
     axios.get("http://localhost:8090/api/customers")

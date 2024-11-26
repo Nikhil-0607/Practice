@@ -25,6 +25,7 @@ import DynamicRouting from "./components/DynamicRouting";
 import User from "./components/User";
 import BusDetailForm from "./components/BusDetailForm";
 import TaskFive from "./components/TaskFive";
+import TaskSix from "./components/TaskSix";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -122,11 +123,15 @@ function App() {
               <Menu.Item key="12">
                 <Link to="/TaskFive">TaskFive</Link>
               </Menu.Item>
+              <Menu.Item key="13">
+                <Link to="/TaskSix">TaskSix</Link>
+              </Menu.Item>
             </Menu>
           </Sider>
 
           <Content style={contentStyle}>
             <Routes>
+              
               <Route path="/" element={<Home />} />
               <Route path="/Home" element={<Home />} />
               <Route path="/About" element={<About />} />
@@ -144,7 +149,7 @@ function App() {
               <Route path="/user/:key/:name" element={<User />}></Route>
               <Route path="BusDetailForm" element={<BusDetailForm />} />
               <Route path="TaskFive" element={<TaskFive />} />
-
+              <Route path="TaskSix" element={<TaskSix />} />
 
             </Routes>
           </Content>
