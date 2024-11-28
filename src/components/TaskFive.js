@@ -49,12 +49,6 @@ const TaskFive = () => {
     setIsModalOpen(false);
   };
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   const handleUpdate = async (values) => {
     try {
@@ -118,7 +112,7 @@ const TaskFive = () => {
                     label="email"
                     name="email"
                     onChange={handleChange}
-                    value={formData.email}
+                    value={data.email}
                     rules={[
                       {
                         required: true,
@@ -137,7 +131,7 @@ const TaskFive = () => {
                     label="name"
                     name="name"
                     onChange={handleChange}
-                    value={formData.name}
+                    value={data.name}
                     rules={[
                       {
                         required: true,
@@ -152,7 +146,7 @@ const TaskFive = () => {
                     label="mobile"
                     name="mobile"
                     onChange={handleChange}
-                    value={formData.mobile}
+                    value={data.mobile}
                     rules={[
                       {
                         required: true,
@@ -192,7 +186,7 @@ const TaskFive = () => {
                     label="state"
                     name="state"
                     onChange={handleChange}
-                    value={formData.state}
+                    value={data.state}
                     rules={[
                       {
                         required: true,
@@ -207,7 +201,7 @@ const TaskFive = () => {
                     label="aadhar"
                     name="aadhar"
                     onChange={handleChange}
-                    value={formData.aadhar}
+                    value={data.aadhar}
                     rules={[
                       {
                         required: true,
