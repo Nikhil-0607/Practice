@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import Jsr from "./components/Jsr";
-import NewFile from "./components/NewFile";
-import JsonData from "./components/JsonData";
-import Chart from "./components/Chart";
+// import Jsr from "./components/Jsr";
+// import NewFile from "./components/NewFile";
+// import JsonData from "./components/JsonData";
+// import Chart from "./components/Chart";
 import PieChart from "./components/PieChart";
 import BarChart from "./components/BarChart";
 import LineChart from "./components/LineChart";
@@ -11,8 +11,8 @@ import About from "./components/About";
 import Notfound from "./components/Notfound";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
-import { Card, Menu } from "antd";
-import { Flex, Layout } from "antd";
+import { Menu } from "antd";
+import { Layout } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import Cards from "./components/Cards";
 import TaskOne from "./components/TaskOne";
@@ -21,7 +21,6 @@ import TaskThree from "./components/TaskThree";
 import TaskFour from "./components/TaskFour";
 import BusRegForm from "./components/BusRegForm";
 import New from "./components/New";
-import DynamicRouting from "./components/DynamicRouting";
 import User from "./components/User";
 import BusDetailForm from "./components/BusDetailForm";
 import TaskFive from "./components/TaskFive";
@@ -43,14 +42,14 @@ const contentStyle: React.CSSProperties = {
   minHeight: 120,
   lineHeight: "120px",
   color: "#fff",
-  backgroundColor: "#1677ff",
+  backgroundColor: "#fff",
 };
 
 const siderStyle: React.CSSProperties = {
   textAlign: "center",
   lineHeight: "120px",
   color: "#fff",
-  backgroundColor: "#1677ff",
+  backgroundColor: "#fff",
 };
 
 const footerStyle: React.CSSProperties = {
@@ -81,7 +80,7 @@ function App() {
               <Menu.Item key="1">
                 {" "}
                 <Link to="/Home">
-                  <HomeOutlined spin="true" /> Home
+                  <HomeOutlined /> Home
                 </Link>
               </Menu.Item>
               <Menu.Item key="2">
@@ -115,15 +114,12 @@ function App() {
                 <Link to="/New">New</Link>
               </Menu.Item>
               <Menu.Item key="12">
-                <Link to="/DynamicRouting">DynamicRouting</Link>
-              </Menu.Item>
-              <Menu.Item key="12">
                 <Link to="/BusDetailForm">BusDetailForm</Link>
               </Menu.Item>
-              <Menu.Item key="12">
+              <Menu.Item key="13">
                 <Link to="/TaskFive">TaskFive</Link>
               </Menu.Item>
-              <Menu.Item key="13">
+              <Menu.Item key="14">
                 <Link to="/TaskSix">TaskSix</Link>
               </Menu.Item>
             </Menu>
@@ -139,13 +135,12 @@ function App() {
               <Route path="LineChart" element={<LineChart />} />
               <Route path="PieChart" element={<PieChart />} />
               <Route path="Cards" element={<Cards />} />
-              {/* <Route path="*" element={<Notfound />} /> */}
+              <Route path="*" element={<Notfound />} />
               <Route path="TaskOne" element={<TaskOne />} />
               <Route path="TaskTwo" element={<TaskTwo />} />
               <Route path="TaskThree" element={<TaskThree />} />
               <Route path="TaskFour" element={<TaskFour />} />
               <Route path="New" element={<New />} />
-              <Route path="DynamicRouting" element={<DynamicRouting />} />
               <Route path="/user/:key/:name" element={<User />}></Route>
               <Route path="BusDetailForm" element={<BusDetailForm />} />
               <Route path="TaskFive" element={<TaskFive />} />

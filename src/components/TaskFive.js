@@ -1,54 +1,100 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Modal, Form, Input, Select, notification, Space } from "antd";
+import {
+  Card,
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  notification,
+  Space,
+} from "antd";
 import axios from "axios";
 
 const { Option } = Select;
 
 const TaskFive = () => {
-  const [data, setData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [singleData, setSingleData] = useState(null); 
-  const [api, contextHolder] = notification.useNotification();
+  const [data, setData] = useState([]); // State for customer data
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility
+  const [singleData, setSingleData] = useState(null); // Data for the selected customer
+  const [api, contextHolder] = notification.useNotification(); // Ant Design notification
+  const [form] = Form.useForm(); // Ant Design Form instance
 
+  // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, []);
 
-  
+  // Fetch customer data from the API
   const fetchData = () => {
     axios
       .get("http://localhost:8090/api/customers")
       .then((response) => setData(response.data))
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        api.error({
+          message: "Fetch Failed",
+          description: "Failed to fetch customer data.",
+        });
+      });
   };
 
-  
+  // Delete a customer by ID
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:8090/api/customers/${id}`)
       .then(() => {
-        api.success({ message: "Deleted Successfully", description: "Customer Deleted Successfully" });
-        fetchData();
+        api.success({
+          message: "Deleted Successfully",
+          description: "Customer has been deleted.",
+        });
+        fetchData(); // Refresh the data
       })
-      .catch((error) => console.error("Error deleting data:", error));
+      .catch((error) => {
+        console.error("Error deleting data:", error);
+        api.error({
+          message: "Delete Failed",
+          description: "Failed to delete customer.",
+        });
+      });
   };
 
-  
-  const showModal = (user) => {
-    setSingleData(user);
-    setIsModalOpen(true);
-  };
-
-  
+  // Update customer data
   const handleUpdate = (values) => {
+    if (!singleData?.id) return; // Ensure `singleData` has a valid ID
+
     axios
       .put(`http://localhost:8090/api/customers/${singleData.id}`, values)
       .then(() => {
-        api.success({ message: "Updated Successfully", description: "Customer Updated Successfully" });
-        fetchData();
-        setIsModalOpen(false);
+        api.success({
+          message: "Updated Successfully",
+          description: "Customer data has been updated.",
+        });
+        fetchData(); // Refresh the data
+        setIsModalOpen(false); // Close the modal
+        setSingleData(null); // Reset selected data
       })
-      .catch((error) => console.error("Error updating data:", error));
+      .catch((error) => {
+        console.error("Error updating data:", error);
+        api.error({
+          message: "Update Failed",
+          description: "Failed to update customer data.",
+        });
+      });
+  };
+
+  // Show the edit modal with the selected customer's data
+  const showModal = (user) => {
+    setSingleData(user);
+    setIsModalOpen(true);
+    form.setFieldsValue(user); // Update form fields with selected user's data
+  };
+
+  // Close the modal and reset `singleData`
+  const handleCancel = () => {
+    setSingleData(null);
+    setIsModalOpen(false);
+    form.resetFields(); // Reset form fields
   };
 
   return (
@@ -62,87 +108,100 @@ const TaskFive = () => {
             <p>Gender: {user.gender}</p>
             <p>State: {user.state}</p>
             <p>Aadhar: {user.aadhar}</p>
-            <Button onClick={() => handleDelete(user.id)}>Delete</Button>
-            <Button type="primary" onClick={() => showModal(user)}>
+            <Button danger onClick={() => handleDelete(user.id)}>
+              Delete
+            </Button>
+            <Button type="primary" onClick={() => showModal(user)} style={{ marginLeft: "8px" }}>
               Edit
             </Button>
           </Card>
         ))}
       </Space>
 
-      {singleData && (
-        <Modal
-          title="Edit Customer"
-          open={isModalOpen}
-          onCancel={() => setIsModalOpen(false)}
-          footer={null}
+      {/* Modal for editing customer details */}
+      <Modal
+        title="Edit User"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={null} // Remove default footer
+      >
+        <Form
+          form={form} // Use the form instance
+          onFinish={handleUpdate}
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 16 }}
         >
-          <Form
-            initialValues={singleData}
-            onFinish={handleUpdate}
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 16 }}
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Please input your email!" },
+              { type: "email", message: "Please enter a valid email!" },
+            ]}
           >
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                { required: true, message: "Please input your email!" },
-                { type: "email", message: "Please enter a valid email!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: "Please input your name!" }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Mobile"
-              name="mobile"
-              rules={[
-                { required: true, message: "Please input your mobile number!" },
-                { len: 10, message: "Mobile number must be 10 digits!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Gender"
-              name="gender"
-              rules={[{ required: true, message: "Please select gender!" }]}
-            >
-              <Select>
-                <Option value="male">Male</Option>
-                <Option value="female">Female</Option>
-                <Option value="other">Other</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item
-              label="State"
-              name="state"
-              rules={[{ required: true, message: "Please input your state!" }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Aadhar"
-              name="aadhar"
-              rules={[{ required: true, message: "Please input your aadhar!" }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[{ required: true, message: "Please input your name!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Mobile"
+            name="mobile"
+            rules={[
+              {
+                required: true,
+                message: "Please input your mobile number!",
+              },
+              { len: 10, message: "Mobile number must be 10 digits!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Gender"
+            name="gender"
+            rules={[{ required: true, message: "Please select gender!" }]}
+          >
+            <Select>
+              <Option value="male">Male</Option>
+              <Option value="female">Female</Option>
+              <Option value="other">Other</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="State"
+            name="state"
+            rules={[{ required: true, message: "Please input your state!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Aadhar"
+            name="aadhar"
+            rules={[
+              { required: true, message: "Please input your Aadhar!" },
+              {
+                pattern: /^\d{12}$/,
+                message: "Aadhar number must be 12 digits!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+            <Space>
+              <Button onClick={handleCancel}>Cancel</Button>
               <Button type="primary" htmlType="submit">
-                Save
+                Update
               </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
-      )}
+            </Space>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };
