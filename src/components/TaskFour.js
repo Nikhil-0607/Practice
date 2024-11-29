@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Checkbox, Form, Input, Select,  } from "antd";
+import { Button, Checkbox, Form, Input, Select, notification } from "antd";
 
 
 const TaskFour = () => {
@@ -13,11 +13,7 @@ const TaskFour = () => {
     aadhar: "false",
   });
 
-  // const submitData = (values) => {
-  //   // e.preventDefault();
-  //   // console.log(formData);
-  //   console.log('Success:', values);
-  // };
+  const [api, contextHolder] = notification.useNotification();
 
 
   const submitData = async (values) => {
@@ -25,6 +21,10 @@ const TaskFour = () => {
       const response = await axios.post('http://localhost:8090/api/customers/', values); 
       if (response.status === 200) {
         // message.success('User add successfully!');
+        api.success({
+          message: "User Submitted Successfully",
+          description: "User data has been Submitted.",
+        });
         console.log('User add successfully')
       }
     } catch (error) {
@@ -45,8 +45,7 @@ const TaskFour = () => {
 
   return (
     <div>
-      <h1>TaskThree</h1>
-
+      {contextHolder}
       <Form
         name="basic"
         labelCol={{

@@ -10,6 +10,7 @@ import {
   Space,
 } from "antd";
 import axios from "axios";
+import TaskFour from "./TaskFour";
 
 const { Option } = Select;
 
@@ -18,13 +19,14 @@ const TaskFive = () => {
   const [singleData, setSingleData] = useState(null); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
 
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Fetch customer data from the API
+
   const fetchData = () => {
     axios
       .get("http://localhost:8090/api/customers")
@@ -38,7 +40,7 @@ const TaskFive = () => {
       });
   };
 
-  // Delete a customer by ID
+  
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:8090/api/customers/${id}`)
@@ -52,7 +54,7 @@ const TaskFive = () => {
       .catch((error) => console.error("Error deleting data:", error));
   };
 
-  // Update customer data
+ 
   const handleUpdate = (values) => {
     if (!singleData?.id) return; // Ensure `singleData` has a valid ID
 
@@ -74,10 +76,37 @@ const TaskFive = () => {
     setSingleData(user);
     setIsModalOpen(true);
   };
+  const handleCancel = ()=>{
+    setIsModalOpen(false);
+    setSingleData(null); // Reset selected data
+  }
+
+
+  const showNewModal = () => {
+    setIsNewModalOpen(true);
+  };
+  const handleNewOk = () => {
+    setIsNewModalOpen(false);
+    fetchData();
+  };
+  const handleNewCancel = () => {
+    setIsNewModalOpen(false);
+  };
 
   return (
     <div>
       {contextHolder}
+
+
+      <Button type="primary" onClick={showNewModal}>
+        New User
+      </Button>
+      <Modal title="Enter Details of New User" open={isNewModalOpen} onOk={handleNewOk} onCancel={handleNewCancel}>
+       <TaskFour/>
+      </Modal>
+
+
+
       <Space direction="horizontal" size={20} wrap>
         {data.map((user) => (
           <Card key={user.id} title={user.name} style={{ width: 300 }}>
@@ -94,15 +123,15 @@ const TaskFive = () => {
         ))}
       </Space>
 
-      {/* Modal for editing customer details */}
-      <Modal
+      
+      {singleData !== null && (<Modal
         title="Edit User"
         open={isModalOpen}
         onCancel={handleCancel}
-        footer={null} // Remove default footer
+        footer={null} 
       >
         <Form
-          form={form} // Use the form instance
+          initialValues={singleData}
           onFinish={handleUpdate}
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 16 }}
@@ -169,15 +198,13 @@ const TaskFive = () => {
             <Input />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-            <Space>
-              <Button onClick={handleCancel}>Cancel</Button>
               <Button type="primary" htmlType="submit">
                 Update
               </Button>
             </Form.Item>
           </Form>
         </Modal>
-       )} 
+       )}
     </div>
   );
 };

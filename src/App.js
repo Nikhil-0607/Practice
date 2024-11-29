@@ -1,12 +1,5 @@
 import React from "react";
 import "./App.css";
-<<<<<<< HEAD
-=======
-// import Jsr from "./components/Jsr";
-// import NewFile from "./components/NewFile";
-// import JsonData from "./components/JsonData";
-// import Chart from "./components/Chart";
->>>>>>> dacffe3d288d5b1930d39cc28ef73f913a63adcf
 import PieChart from "./components/PieChart";
 import BarChart from "./components/BarChart";
 import LineChart from "./components/LineChart";
@@ -117,7 +110,6 @@ function App() {
                 <Link to="/New">New</Link>
               </Menu.Item>
               <Menu.Item key="12">
-<<<<<<< HEAD
                 <Link to="/DynamicRouting">DynamicRouting</Link>
               </Menu.Item>
               <Menu.Item key="13">
@@ -127,14 +119,6 @@ function App() {
                 <Link to="/TaskFive">TaskFive</Link>
               </Menu.Item>
               <Menu.Item key="15">
-=======
-                <Link to="/BusDetailForm">BusDetailForm</Link>
-              </Menu.Item>
-              <Menu.Item key="13">
-                <Link to="/TaskFive">TaskFive</Link>
-              </Menu.Item>
-              <Menu.Item key="14">
->>>>>>> dacffe3d288d5b1930d39cc28ef73f913a63adcf
                 <Link to="/TaskSix">TaskSix</Link>
               </Menu.Item>
             </Menu>
