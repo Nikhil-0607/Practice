@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Select, DatePicker, TimePicker, InputNumber, Checkbox, Row, Col } from "antd";
 import axios from "axios";
-import { useState } from "react";
 
 const { Option } = Select;
 
@@ -29,43 +28,47 @@ const BusDetailForm = () => {
   return (
     <div
       style={{
-        maxWidth: 600,
-        margin: "0 auto",
-        padding: 20,
+        maxWidth: 800, // Increased width for the form
+        margin: "20px auto", // Add space around the form (top/bottom/left/right)
+        padding: "30px", // Optional: padding inside the container for better appearance
         background: "#fff",
         borderRadius: 8,
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
       }}
     >
-      {/* <h2 style={{ textAlign: "center", marginBottom: 10 }}>Bus Detail Form</h2> */}
       <Form
         form={form}
         layout="vertical"
         onFinish={handleSubmit}
         initialValues={{ capacity: 50, type: "Regular", days: [] }}
       >
-        <Form.Item
-          name="busName"
-          label="Bus Name"
-          rules={[{ required: true, message: "Please enter the bus name!" }]}
-        >
-          <Input placeholder="Bus name" />
-        </Form.Item>
-
-        <Form.Item
-          name="busNumber"
-          label="Bus Number"
-          rules={[{ required: true, message: "Please enter the bus number!" }]}
-        >
-          <Input placeholder="Bus number (e.g., MH12-1234)" />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="busName"
+              label="Bus Name"
+              rules={[{ required: true, message: "Please enter the bus name!" }]}
+            >
+              <Input placeholder="Bus name" style={{ height: "35px" }} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="busNumber"
+              label="Bus Number"
+              rules={[{ required: true, message: "Please enter the bus number!" }]}
+            >
+              <Input placeholder="Bus number (e.g., MH12-1234)" style={{ height: "35px" }} />
+            </Form.Item>
+          </Col>
+        </Row>
 
         <Form.Item
           name="route"
           label="Route"
           rules={[{ required: true, message: "Please enter the route!" }]}
         >
-          <Input placeholder="Route (e.g., City A - City B)" />
+          <Input placeholder="Route (e.g., City A - City B)" style={{ height: "35px" }} />
         </Form.Item>
 
         <Row gutter={16}>
@@ -75,7 +78,7 @@ const BusDetailForm = () => {
               label="Departure"
               rules={[{ required: true, message: "Select departure time!" }]}
             >
-              <TimePicker format="HH:mm" style={{ width: "100%" }} />
+              <TimePicker format="HH:mm" style={{ width: "100%", height: "35px" }} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -84,7 +87,7 @@ const BusDetailForm = () => {
               label="Arrival"
               rules={[{ required: true, message: "Select arrival time!" }]}
             >
-              <TimePicker format="HH:mm" style={{ width: "100%" }} />
+              <TimePicker format="HH:mm" style={{ width: "100%", height: "35px" }} />
             </Form.Item>
           </Col>
         </Row>
@@ -96,7 +99,7 @@ const BusDetailForm = () => {
               label="Travel Date"
               rules={[{ required: true, message: "Select travel date!" }]}
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker style={{ width: "100%", height: "35px" }} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -125,7 +128,7 @@ const BusDetailForm = () => {
               label="Capacity"
               rules={[{ required: true, message: "Enter capacity!" }]}
             >
-              <InputNumber min={1} max={100} style={{ width: "100%" }} />
+              <InputNumber min={1} max={100} style={{ width: "100%", height: "35px" }} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -134,7 +137,7 @@ const BusDetailForm = () => {
               label="Type"
               rules={[{ required: true, message: "Select type!" }]}
             >
-              <Select>
+              <Select style={{ height: "35px" }}>
                 <Option value="Regular">Regular</Option>
                 <Option value="AC">AC</Option>
                 <Option value="Sleeper">Sleeper</Option>
@@ -148,11 +151,11 @@ const BusDetailForm = () => {
           label="Ticket Price (₹)"
           rules={[{ required: true, message: "Enter ticket price!" }]}
         >
-          <InputNumber min={0} prefix="₹" style={{ width: "100%" }} />
+          <InputNumber min={0} prefix="₹" style={{ width: "100%", height: "35px" }} />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" block loading={loading}>
+          <Button type="primary" htmlType="submit" block loading={loading} style={{ height: "40px" }}>
             Submit
           </Button>
         </Form.Item>
