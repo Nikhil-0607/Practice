@@ -6,9 +6,10 @@ const { Option } = Select;
 
 const TaskFive = () => {
   const [data, setData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [singleData, setSingleData] = useState(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+
 
   useEffect(() => {
     fetchData();
@@ -34,12 +35,6 @@ const TaskFive = () => {
   };
 
   
-  const showModal = (user) => {
-    setSingleData(user);
-    setIsModalOpen(true);
-  };
-
-  
   const handleUpdate = (values) => {
     axios
       .put(`http://localhost:8090/api/customers/${singleData.id}`, values)
@@ -49,6 +44,11 @@ const TaskFive = () => {
         setIsModalOpen(false);
       })
       .catch((error) => console.error("Error updating data:", error));
+  };
+
+  const showModal = (user) => {
+    setSingleData(user);
+    setIsModalOpen(true);
   };
 
   return (
@@ -63,7 +63,7 @@ const TaskFive = () => {
             <p>State: {user.state}</p>
             <p>Aadhar: {user.aadhar}</p>
             <Button onClick={() => handleDelete(user.id)}>Delete</Button>
-            <Button type="primary" onClick={() => showModal(user)}>
+            <Button type="primary" onClick={()=>showModal(user)}>
               Edit
             </Button>
           </Card>
@@ -142,7 +142,7 @@ const TaskFive = () => {
             </Form.Item>
           </Form>
         </Modal>
-      )}
+       )} 
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Space, Rate, Collapse } from "antd";
 import axios from "axios";
-import Panel from "antd/es/splitter/Panel";
+
 
 const TaskSix = () => {
   const [data, setData] = useState([]);
